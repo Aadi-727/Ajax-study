@@ -19,20 +19,30 @@
 				xhr.open("GET", "test.txt", true);
 				// console.log(xhr); --> all properties of http object
 
-				xhr.onload = function () {
-					if ((this.status = 200)) {
-					}
-					//this. as of object
-					console.log(this.responseText);
-				};
+				/* 		xhr.onload = function () {
+							if ((this.status = 200)) {
+							}
+							//this. as of object
+							console.log(this.responseText);
+						};
 
-				// Sends request
-				xhr.send();
+
+			*/
 
 				/* HTTP Statuses */
 				// 200 : "oK"
 				// 403 : "Forbidden"
 				// 404 : "Not Found"
+
+				xhr.onreadystatechange = function () {
+					if (this.readystate == 4 && this.status == 200) {
+						console.log(this.responseText);
+					}
+				};
+
+				// Sends request
+				xhr.send();
+				// ready state change value 1-4
 			}
 		</script>
 	</body>
