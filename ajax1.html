@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Ajax Crash Course</title>
+	</head>
+	<body>
+		<button id="button">Get text file</button>
+		<script>
+			// create event listner
+			document.getElementById("button").addEventListener("click", loadText);
+
+			function loadText() {
+				// create xhr object
+				let xhr = new XMLHttpRequest(); // -> this is the http object
+				// Open -type, url/file, async
+				xhr.open("GET", "test.txt", true);
+				// console.log(xhr); --> all properties of http object
+
+				xhr.onload = function () {
+					if ((this.status = 200)) {
+					}
+					//this. as of object
+					console.log(this.responseText);
+				};
+
+				// Sends request
+				xhr.send();
+
+				/* HTTP Statuses */
+				// 200 : "oK"
+				// 403 : "Forbidden"
+				// 404 : "Not Found"
+			}
+		</script>
+	</body>
+</html>
