@@ -8,6 +8,8 @@
 	</head>
 	<body>
 		<button id="button">Get text file</button>
+		<br /><br /><br />
+		<div id="text"></div>
 		<script>
 			// create event listner
 			document.getElementById("button").addEventListener("click", loadText);
@@ -17,28 +19,47 @@
 				let xhr = new XMLHttpRequest(); // -> this is the http object
 				// Open -type, url/file, async
 				xhr.open("GET", "test.txt", true);
+				console.log("READYSTATE :", xhr.readyState);
 				// console.log(xhr); --> all properties of http object
 
-				/* 		xhr.onload = function () {
-							if ((this.status = 200)) {
-							}
-							//this. as of object
-							console.log(this.responseText);
-						};
+				// Optional --> Used for loaders --> most are optional
 
+				xhr.onprogress = function () {
+					console.log("READYSTATE :", xhr.readyState); // --> ready state on 3
+				};
 
-			*/
+				xhr.onload = function () {
+					if (this.status == 200) {
+						// console.log(this.responseText);
+						document.getElementById("text").innerHTML = this.responseText;
+					} else if (this.status == 404) {
+						document.getElementById("text").innerHTML =
+							"NoT FoUnD <span> &#128533;</span>";
+						document.getElementById("text").style.color = "red";
+					}
+					//this. as of object
+				};
+
+				// error handling
+				xhr.onerror = function () {
+					console.log("Request error");
+				};
 
 				/* HTTP Statuses */
 				// 200 : "oK"
 				// 403 : "Forbidden"
 				// 404 : "Not Found"
 
-				xhr.onreadystatechange = function () {
+				/* Using Ready state --> check for ready state too */
+				/*
+			    	xhr.onreadystatechange = function () {
+					console.log("READYSTATE :", xhr.readyState);
+
 					if (this.readystate == 4 && this.status == 200) {
 						console.log(this.responseText);
 					}
 				};
+			     */
 
 				// Sends request
 				xhr.send();
